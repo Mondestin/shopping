@@ -17,6 +17,10 @@ function App() {
       <Router>
         <Navbar />
         <Routes>
+          <Route path="/"
+            render={() => (
+              <h2>Home</h2>
+            )} />
           <Route path="/create" element={<NewItem />} />
         </Routes>
       </Router>

@@ -16,35 +16,15 @@ import Paper from '@mui/material/Paper';
 import Checkbox from '@mui/material/Checkbox';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Switch from '@mui/material/Switch';
 import DeleteIcon from '@mui/icons-material/Delete';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import { visuallyHidden } from '@mui/utils';
+import firebase from '../firebase_config';
+import { useState, useEffect } from 'react';
 
-function createData(name, calories, fat, carbs, protein) {
-    return {
-        name,
-        calories,
-        fat,
-        carbs,
-        protein,
-    };
-}
 
-const rows = [
-    createData('Cupcake', 305, 3.7, 67, 4.3),
-    createData('Donut', 452, 25.0, 51, 4.9),
-    createData('Eclair', 262, 16.0, 24, 6.0),
-    createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-    createData('Gingerbread', 356, 16.0, 49, 3.9),
-    createData('Honeycomb', 408, 3.2, 87, 6.5),
-    createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-    createData('Jelly Bean', 375, 0.0, 94, 0.0),
-    createData('KitKat', 518, 26.0, 65, 7.0),
-    createData('Lollipop', 392, 0.2, 98, 0.0),
 
-];
+const rows = [];
 
 function descendingComparator(a, b, orderBy) {
     if (b[orderBy] < a[orderBy]) {
@@ -84,29 +64,24 @@ const headCells = [
         label: 'Item name',
     },
     {
-        id: 'calories',
+        id: 'categories',
         numeric: true,
         disablePadding: false,
         label: 'Category',
     },
     {
-        id: 'fat',
+        id: 'shoppigList',
         numeric: true,
         disablePadding: false,
         label: 'Shopping List',
     },
     {
-        id: 'carbs',
+        id: 'description',
         numeric: true,
         disablePadding: false,
         label: 'Desciption',
     },
-    {
-        id: 'protein',
-        numeric: true,
-        disablePadding: false,
-        label: 'Status',
-    },
+
 ];
 
 function EnhancedTableHead(props) {
@@ -222,12 +197,33 @@ EnhancedTableToolbar.propTypes = {
 
 export default function EnhancedTable() {
     const [order, setOrder] = React.useState('asc');
-    const [orderBy, setOrderBy] = React.useState('calories');
+    const [orderBy, setOrderBy] = React.useState('categories');
     const [selected, setSelected] = React.useState([]);
     const [page, setPage] = React.useState(0);
-    const [dense, setDense] = React.useState(true);
+    // const [dense, setDense] = React.useState(true);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
+    const [items, setItems] = useState([]);
+    const db = firebase.firestore().collection("items");
+
+    useEffect(() => {
+        getItems();
+    })
+    // get the items from the db
+    function getItems() {
+        db.onSnapshot(function (querySnapshot) {
+            setItems(
+                querySnapshot.docs.map((doc) => ({
+                    id: doc.id,
+                    name: doc.data().name,
+                    categorie: doc.data().categorie,
+                    shoppinlist: doc.data().shoppinlist,
+                    description: doc.data().description,
+                    status: doc.data().status
+                }))
+            )
+        });
+    }
     const handleRequestSort = (event, property) => {
         const isAsc = orderBy === property && order === 'asc';
         setOrder(isAsc ? 'desc' : 'asc');
@@ -272,9 +268,9 @@ export default function EnhancedTable() {
         setPage(0);
     };
 
-    const handleChangeDense = (event) => {
-        setDense(event.target.checked);
-    };
+    // const handleChangeDense = (event) => {
+    //     setDense(event.target.checked);
+    // };
 
     const isSelected = (name) => selected.indexOf(name) !== -1;
 
@@ -288,9 +284,9 @@ export default function EnhancedTable() {
                 <EnhancedTableToolbar numSelected={selected.length} />
                 <TableContainer>
                     <Table
-                        sx={{ minWidth: 750 }}
+                        sx={{ minWidth: 650 }}
                         aria-labelledby="tableTitle"
-                        size={dense ? 'small' : 'medium'}
+                    // size={dense ? 'small' : 'medium'}
                     >
                         <EnhancedTableHead
                             numSelected={selected.length}
@@ -301,20 +297,20 @@ export default function EnhancedTable() {
                             rowCount={rows.length}
                         />
                         <TableBody>
-                            {stableSort(rows, getComparator(order, orderBy))
+                            {stableSort(items, getComparator(order, orderBy))
                                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                                .map((row, index) => {
-                                    const isItemSelected = isSelected(row.name);
+                                .map((item, index) => {
+                                    const isItemSelected = isSelected(item.name);
                                     const labelId = `enhanced-table-checkbox-${index}`;
 
                                     return (
                                         <TableRow
                                             hover
-                                            onClick={(event) => handleClick(event, row.name)}
+                                            onClick={(event) => handleClick(event, item.name)}
                                             role="checkbox"
                                             aria-checked={isItemSelected}
                                             tabIndex={-1}
-                                            key={row.name}
+                                            key={item.id}
                                             selected={isItemSelected}
                                         >
                                             <TableCell padding="checkbox">
@@ -332,20 +328,20 @@ export default function EnhancedTable() {
                                                 scope="row"
                                                 padding="none"
                                             >
-                                                {row.name}
+                                                {item.name}
                                             </TableCell>
-                                            <TableCell align="right">{row.calories}</TableCell>
-                                            <TableCell align="right">{row.fat}</TableCell>
-                                            <TableCell align="right">{row.carbs}</TableCell>
-                                            <TableCell align="right">{row.protein}</TableCell>
+                                            <TableCell align="right">{item.categorie}</TableCell>
+                                            <TableCell align="right">{item.shoppinlist}</TableCell>
+                                            <TableCell align="right">{item.description}</TableCell>
+
                                         </TableRow>
                                     );
                                 })}
                             {emptyRows > 0 && (
                                 <TableRow
-                                    style={{
-                                        height: (dense ? 33 : 53) * emptyRows,
-                                    }}
+                                // style={{
+                                //     height: (dense ? 33 : 53) * emptyRows,
+                                // }}
                                 >
                                     <TableCell colSpan={6} />
                                 </TableRow>
