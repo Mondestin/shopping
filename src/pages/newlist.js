@@ -21,8 +21,8 @@ const NewItem = () => {
 
 
   // save the item in the db
-  function saveItem(event, itemName, itemDescription, itemCategorie, itemShoppinlist) {
-    event.preventDefault();
+  function saveItem(e, itemName, itemDescription, itemCategorie, itemShoppinlist) {
+    e.preventDefault();
 
     console.log(itemDescription);
     db.add({
@@ -57,7 +57,7 @@ const NewItem = () => {
         <h1>New Item</h1>
 
         <Grid container spacing={2}>
-          <Grid item xs={12} sm={4} sx={{ mt: 10 }}>
+          <Grid item xs={12} sm={4} sx={{ mt: 3 }}>
             <form>
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={6}>
@@ -129,7 +129,7 @@ const NewItem = () => {
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
-                onClick={(event) => { saveItem(event, itemName, itemDescription, itemCategorie, itemShoppinlist) }}
+                onClick={(e) => { saveItem(e, itemName, itemDescription, itemCategorie, itemShoppinlist) }}
               >
                 Save Item
               </Button>
