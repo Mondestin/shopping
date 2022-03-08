@@ -8,8 +8,11 @@ const Navbar = () => {
                     <Link to="/">
                         <Button variant="contained">Home</Button>
                     </Link>
-                    <Link to="/create">
-                        <Button variant="contained">New shooping List</Button>
+                    <Link to="/create-shopping-list">
+                        <Button variant="contained">New shopping List</Button>
+                    </Link>
+                    <Link to="/create-item">
+                        <Button variant="contained">New Item</Button>
                     </Link>
                 </div>
             </nav>

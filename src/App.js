@@ -2,7 +2,9 @@ import './App.css';
 import * as React from 'react';
 import Navbar from './components/NavBar';
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import NewItem from './pages/newlist';
+import NewItem from './pages/newitem';
+import Home from './pages/home';
+import NewList from './pages/newlist';
 
 function App() {
   return (
@@ -17,11 +19,9 @@ function App() {
       <Router>
         <Navbar />
         <Routes>
-          <Route path="/"
-            render={() => (
-              <h2>Home</h2>
-            )} />
-          <Route path="/create" element={<NewItem />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/create-shopping-list" element={<NewList />} />
+          <Route path="/create-item" element={<NewItem />} />
         </Routes>
       </Router>
 
