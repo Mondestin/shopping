@@ -1,16 +1,16 @@
-import '../App.css';
-import * as React from 'react';
-import TextField from '@mui/material/TextField';
-import { useState } from 'react';
-import Button from '@mui/material/Button';
-import firebase from '../firebase_config';
-import Grid from '@mui/material/Grid';
-import Select from '@mui/material/Select';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import EnhancedTable from '../components/ItemTable';
-import CategoryList from '../components/Category/CategoryList';
+import "../App.css";
+import * as React from "react";
+import TextField from "@mui/material/TextField";
+import { useState } from "react";
+import Button from "@mui/material/Button";
+import firebase from "../firebase_config";
+import Grid from "@mui/material/Grid";
+import Select from "@mui/material/Select";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import EnhancedTable from "../components/ItemTable";
+import CategoryList from "../components/Category/CategoryList";
 
 const NewItem = () => {
   const [itemName, setItemName] = useState("");
@@ -19,9 +19,14 @@ const NewItem = () => {
   const [itemCategorie, setItemCategorie] = useState("");
   const db = firebase.firestore().collection("items");
 
-
   // save the item in the db
-  function saveItem(e, itemName, itemDescription, itemCategorie, itemShoppinlist) {
+  function saveItem(
+    e,
+    itemName,
+    itemDescription,
+    itemCategorie,
+    itemShoppinlist
+  ) {
     e.preventDefault();
 
     db.add({
@@ -29,7 +34,7 @@ const NewItem = () => {
       categorie: itemCategorie,
       shoppinlist: itemShoppinlist,
       description: itemDescription,
-      status: true
+      status: true,
     });
     setItemName("");
     setItemShoppinlist("");
@@ -39,33 +44,39 @@ const NewItem = () => {
   return (
     <div
       style={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
       }}
     >
-      <div className="App"
+      <div
+        className="App"
         style={{
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
-          width: "80%"
-        }}>
+          width: "80%",
+        }}
+      >
         <h1>New Item</h1>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={4} sx={{ mt: 3 }}>
             <form>
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={6}>
-                  <FormControl required sx={{ width: '100%' }}>
-                    <InputLabel id="demo-simple-select-autowidth-label">Shopping List</InputLabel>
+                  <FormControl required sx={{ width: "100%" }}>
+                    <InputLabel id="demo-simple-select-autowidth-label">
+                      Shopping List
+                    </InputLabel>
                     <Select
                       labelId="demo-simple-select-autowidth-label"
                       id="demo-simple-select-autowidth"
                       name="itemShoppinlist"
                       value={itemShoppinlist}
-                      onChange={(e) => { setItemShoppinlist(e.target.value) }}
+                      onChange={(e) => {
+                        setItemShoppinlist(e.target.value);
+                      }}
                       label="Shopping List"
                     >
                       <MenuItem value="Toiletries">Toiletries</MenuItem>
@@ -75,33 +86,39 @@ const NewItem = () => {
                   </FormControl>
                 </Grid>
 
-                <CategoryList itemCategorie={itemCategorie} setItemCategorie={setItemCategorie} />
-
+                <CategoryList
+                  itemCategorie={itemCategorie}
+                  setItemCategorie={setItemCategorie}
+                />
 
                 <Grid item xs={12} sm={12}>
                   <TextField
                     name="ItemName"
-                    required="true"
+                    required
                     fullWidth
                     id="itemName"
                     label="Enter the Item's name"
                     autoFocus
                     value={itemName}
-                    onChange={(e) => { setItemName(e.target.value) }}
+                    onChange={(e) => {
+                      setItemName(e.target.value);
+                    }}
                   />
                 </Grid>
 
                 <Grid item xs={12}>
                   <TextField
                     name="itemDecription"
-                    required="true"
+                    required
                     fullWidth
                     multiline
                     rows={3}
                     id="itemDecription"
                     label="A brief description of the Item"
                     value={itemDescription}
-                    onChange={(e) => { setItemDescription(e.target.value) }}
+                    onChange={(e) => {
+                      setItemDescription(e.target.value);
+                    }}
                   />
                 </Grid>
               </Grid>
@@ -110,7 +127,15 @@ const NewItem = () => {
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
-                onClick={(e) => { saveItem(e, itemName, itemDescription, itemCategorie, itemShoppinlist) }}
+                onClick={(e) => {
+                  saveItem(
+                    e,
+                    itemName,
+                    itemDescription,
+                    itemCategorie,
+                    itemShoppinlist
+                  );
+                }}
               >
                 Save Item
               </Button>
@@ -120,10 +145,8 @@ const NewItem = () => {
             <EnhancedTable />
           </Grid>
         </Grid>
-      </div >
-
-    </div >
-
-  )
+      </div>
+    </div>
+  );
 };
 export default NewItem;

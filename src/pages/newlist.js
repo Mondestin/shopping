@@ -5,43 +5,24 @@ import { useState } from "react";
 import Button from "@mui/material/Button";
 import firebase from "../firebase_config";
 import Grid from "@mui/material/Grid";
-import Select from "@mui/material/Select";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-
-import CategoryList from "../components/Category/CategoryList";
+import ShoppingList from "../components/Shopping/ShoppingList";
+import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
 
 const NewItem = () => {
-  const [itemName, setItemName] = useState("");
-  const [itemShoppinlist, setItemShoppinlist] = React.useState("");
-  const [itemDescription, setItemDescription] = useState("");
-  const [itemCategorie, setItemCategorie] = useState("");
+  const [shoppingName, setShoppingName] = useState("");
+  const [shoppingDate, setShoppingDate] = useState("");
 
-  const db = firebase.firestore().collection("items");
+  const db = firebase.firestore().collection("shoppings");
 
   // save the item in the db
   function saveItem(
-    e,
-    itemName,
-    itemDescription,
-    itemCategorie,
-    itemShoppinlist
+    e
   ) {
     e.preventDefault();
-
-    console.log(itemDescription);
     db.add({
-      name: itemName,
-      categorie: itemCategorie,
-      shoppinlist: itemShoppinlist,
-      description: itemDescription,
-      status: true,
+      name: shoppingName,
+      date: shoppingDate
     });
-    setItemName("");
-    setItemShoppinlist("");
-    setItemDescription("");
-    setItemCategorie("");
   }
   return (
     <div
@@ -61,61 +42,32 @@ const NewItem = () => {
           width: "80%",
         }}
       >
-        <h1>New Item</h1>
+        <h1>New shopping</h1>
 
         <Grid container spacing={2}>
           <Grid item xs={12} sm={4} sx={{ mt: 3 }}>
             <form>
               <Grid container spacing={2}>
-                <Grid item xs={12} sm={6}>
-                  <FormControl required sx={{ width: "100%" }}>
-                    <InputLabel id="demo-simple-select-autowidth-label">
-                      Shopping List
-                    </InputLabel>
-                    <Select
-                      labelId="demo-simple-select-autowidth-label"
-                      id="demo-simple-select-autowidth"
-                      name="itemShoppinlist"
-                      value={itemShoppinlist}
-                      onChange={(e) => {
-                        setItemShoppinlist(e.target.value);
-                      }}
-                      label="Shopping List"
-                    >
-                      <MenuItem value="Toiletries">Toiletries</MenuItem>
-                      <MenuItem value="Fruits">Fruits</MenuItem>
-                      <MenuItem value="Home">Home</MenuItem>
-                    </Select>
-                  </FormControl>
-                </Grid>
-                <CategoryList itemCategorie={itemCategorie} setItemCategorie={setItemCategorie} />
                 <Grid item xs={12} sm={12}>
                   <TextField
-                    name="ItemName"
-                    required="true"
+                    required
                     fullWidth
-                    id="itemName"
-                    label="Enter the Item's name"
+                    label="Name"
                     autoFocus
-                    value={itemName}
+                    value={shoppingName}
                     onChange={(e) => {
-                      setItemName(e.target.value);
+                      setShoppingName(e.target.value);
                     }}
                   />
                 </Grid>
-
-                <Grid item xs={12}>
+                <Grid item xs={12} sm={12}>
                   <TextField
-                    name="itemDecription"
-                    required="true"
+                    required
                     fullWidth
-                    multiline
-                    rows={3}
-                    id="itemDecription"
-                    label="A brief description of the Item"
-                    value={itemDescription}
+                    label="Date"
+                    value={shoppingDate}
                     onChange={(e) => {
-                      setItemDescription(e.target.value);
+                      setShoppingDate(e.target.value);
                     }}
                   />
                 </Grid>
@@ -126,20 +78,17 @@ const NewItem = () => {
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
                 onClick={(e) => {
-                  saveItem(
-                    e,
-                    itemName,
-                    itemDescription,
-                    itemCategorie,
-                    itemShoppinlist
-                  );
+                  saveItem(e);
                 }}
               >
-                Save Item
+                Create shopping
               </Button>
             </form>
           </Grid>
 
+          <Grid item xs={12} sm={8}>
+            <ShoppingList />
+          </Grid>
         </Grid>
       </div>
     </div>
