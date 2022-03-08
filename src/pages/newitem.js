@@ -10,6 +10,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import EnhancedTable from '../components/ItemTable';
+import CategoryList from '../components/Category/CategoryList';
 
 const NewItem = () => {
   const [itemName, setItemName] = useState("");
@@ -23,14 +24,12 @@ const NewItem = () => {
   function saveItem(e, itemName, itemDescription, itemCategorie, itemShoppinlist) {
     e.preventDefault();
 
-    console.log(itemDescription);
     db.add({
       name: itemName,
       categorie: itemCategorie,
       shoppinlist: itemShoppinlist,
       description: itemDescription,
       status: true
-
     });
     setItemName("");
     setItemShoppinlist("");
@@ -75,26 +74,10 @@ const NewItem = () => {
                     </Select>
                   </FormControl>
                 </Grid>
-                <Grid item xs={12} sm={6}>
-                  <FormControl required sx={{ width: '100%' }}>
-                    <InputLabel id="demo-simple-select-autowidth-label">Category</InputLabel>
-                    <Select
-                      labelId="demo-simple-select-autowidth-label"
-                      id="demo-simple-select-autowidth"
-                      required
-                      fullWidth
-                      label="Catetory"
-                      name="itemCategorie"
-                      value={itemCategorie}
-                      onChange={(e) => { setItemCategorie(e.target.value) }}
-                    >
-                      <MenuItem value="Toiletries">Food</MenuItem>
-                      <MenuItem value="Electronics">Electronics</MenuItem>
-                      <MenuItem value="Breakfast">Breakfast</MenuItem>
-                    </Select>
-                  </FormControl>
 
-                </Grid>
+                <CategoryList itemCategorie={itemCategorie} setItemCategorie={setItemCategorie} />
+
+
                 <Grid item xs={12} sm={12}>
                   <TextField
                     name="ItemName"
