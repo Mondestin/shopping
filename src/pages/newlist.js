@@ -3,24 +3,31 @@ import * as React from "react";
 import TextField from "@mui/material/TextField";
 import { useState } from "react";
 import Button from "@mui/material/Button";
-import firebase from "../firebase_config";
+import db from "../firebase_config";
 import Grid from "@mui/material/Grid";
 import ShoppingList from "../components/Shopping/ShoppingList";
+import { addDoc, collection, Timestamp } from "firebase/firestore";
+import { DatePicker, LocalizationProvider } from "@mui/lab";
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
 
 const NewItem = () => {
   const [shoppingName, setShoppingName] = useState("");
-  const [shoppingDate, setShoppingDate] = useState("");
+  const [shoppingDate, setShoppingDate] = useState(new Date());
 
-  const db = firebase.firestore();
-  const shoppingsRef = db.collection("shoppings");
+  const test = () => {
+    console.log("change");
+  };
 
-  function saveItem(e, shoppingName, shoppingDate) {
+  const saveItem = async (e) => {
     e.preventDefault();
-    shoppingsRef.add({
+    console.log(shoppingDate, Timestamp.fromDate(shoppingDate))
+    await addDoc(collection(db, "shoppings"), {
       name: shoppingName,
+      date: Timestamp.fromDate(shoppingDate),
     });
-    console.log(shoppingName);
-  }
+    setShoppingName("");
+    setShoppingDate(new Date());
+  };
 
   return (
     <div
@@ -41,10 +48,9 @@ const NewItem = () => {
         }}
       >
         <h1>New shopping</h1>
-
         <Grid container spacing={2}>
           <Grid item xs={12} sm={4} sx={{ mt: 3 }}>
-            <form>
+            <form onSubmit={saveItem}>
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={12}>
                   <TextField
@@ -59,15 +65,17 @@ const NewItem = () => {
                   />
                 </Grid>
                 <Grid item xs={12} sm={12}>
-                  <TextField
-                    required
-                    fullWidth
-                    label="Date"
-                    value={shoppingDate}
-                    onChange={(e) => {
-                      setShoppingDate(e.target.value);
-                    }}
-                  />
+                  <LocalizationProvider dateAdapter={AdapterDateFns}>
+                    <DatePicker
+                      label="Date"
+                      inputFormat="dd/MM/yyyy"
+                      value={shoppingDate}
+                      onChange={(newValue) => {
+                        setShoppingDate(newValue);
+                      }}
+                      renderInput={(params) => <TextField fullWidth {...params} />}
+                    />
+                  </LocalizationProvider>
                 </Grid>
               </Grid>
               <Button
@@ -75,9 +83,6 @@ const NewItem = () => {
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
-                onClick={(e) => {
-                  saveItem(e, shoppingName, shoppingDate);
-                }}
               >
                 Create shopping
               </Button>

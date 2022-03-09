@@ -1,11 +1,11 @@
 import { FormControl, Grid, InputLabel, MenuItem, Select } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import firebase from "../../firebase_config";
+import db from "../../firebase_config";
 
 const CategoryList = ({ itemCategorie, setItemCategorie }) => {
   const [categories, setCategories] = useState([]);
 
-  const categoryRef = firebase.firestore().collection("categories");
+  const categoryRef = db.collection("categories");
 
   const getCategories = () =>
     categoryRef.onSnapshot((querySnapshot) => {
@@ -39,7 +39,7 @@ const CategoryList = ({ itemCategorie, setItemCategorie }) => {
           }}
         >
           {categories.map((category) => (
-            <MenuItem value={category.data().name}>
+            <MenuItem key={category.data().id} value={category.data().name}>
               {category.data().name}
             </MenuItem>
           ))}

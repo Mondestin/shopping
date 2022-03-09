@@ -10,7 +10,7 @@ import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
-import firebase from '../firebase_config';
+import db from '../firebase_config';
 import { useState, useEffect } from 'react';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
@@ -21,7 +21,7 @@ export default function EnhancedTable() {
     const [items, setItems] = useState([]);
 
     // get the connection with firebase for the items collection
-    const db = firebase.firestore().collection("items");
+    const itemsRef = db.collection("items");
 
 
     // delete the item from the db
@@ -36,7 +36,7 @@ export default function EnhancedTable() {
     })
     // get the items from the db
     function getItems() {
-        db.onSnapshot(function (querySnapshot) {
+        itemsRef.onSnapshot(function (querySnapshot) {
             setItems(
                 querySnapshot.docs.map((doc) => ({
                     id: doc.id,
@@ -76,7 +76,7 @@ export default function EnhancedTable() {
                         <TableBody>
                             {items.map((item) => (
                                 <TableRow
-                                    key={item.name}
+                                    key={item.id}
                                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                 >
                                     <TableCell component="th" scope="row">

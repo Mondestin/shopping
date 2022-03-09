@@ -11,16 +11,14 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
+
 import DeleteIcon from "@mui/icons-material/Delete";
 import React, { useEffect, useState } from "react";
-import firebase from "../../firebase_config";
+import db from "../../firebase_config";
 
 const ShoppingList = () => {
   const [shoppings, setShoppings] = useState([]);
-
-  // get the connection with firebase for the items collection
-  const shoppingsRef = firebase.firestore().collection("shoppings");
-
+  const shoppingsRef = db.collection("shoppings");
   const getCategories = () =>
     shoppingsRef.onSnapshot((querySnapshot) => {
       let shoppings = [];
@@ -32,7 +30,7 @@ const ShoppingList = () => {
 
   useEffect(() => {
     getCategories();
-  });
+  }, []);
 
   return (
     <Box sx={{ width: "100%" }}>
@@ -58,7 +56,7 @@ const ShoppingList = () => {
             <TableBody>
               {shoppings.map((shopping) => (
                 <TableRow
-                  key={shopping.data().name}
+                  key={shopping.data().id}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
                   <TableCell component="th" scope="row">

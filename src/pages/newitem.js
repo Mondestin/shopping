@@ -3,7 +3,7 @@ import * as React from "react";
 import TextField from "@mui/material/TextField";
 import { useState } from "react";
 import Button from "@mui/material/Button";
-import firebase from "../firebase_config";
+import db from "../firebase_config";
 import Grid from "@mui/material/Grid";
 import Select from "@mui/material/Select";
 import InputLabel from "@mui/material/InputLabel";
@@ -17,7 +17,7 @@ const NewItem = () => {
   const [itemShoppinlist, setItemShoppinlist] = React.useState("");
   const [itemDescription, setItemDescription] = useState("");
   const [itemCategorie, setItemCategorie] = useState("");
-  const db = firebase.firestore().collection("items");
+  const itemsRef = db.collection("items");
 
   // save the item in the db
   function saveItem(
@@ -29,7 +29,7 @@ const NewItem = () => {
   ) {
     e.preventDefault();
 
-    db.add({
+    itemsRef.add({
       name: itemName,
       categorie: itemCategorie,
       shoppinlist: itemShoppinlist,
