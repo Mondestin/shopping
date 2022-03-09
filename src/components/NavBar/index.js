@@ -6,7 +6,7 @@ import { TabContext, TabList, TabPanel } from "@mui/lab";
 import Home from "../../pages/home";
 import NewItem from "../../pages/newitem";
 import { useTheme } from '@mui/material/styles';
-import Shopping from "../../pages/shopping";
+import Shopping from "../Shopping";
 
 const Navbar = () => {
   const theme = useTheme();

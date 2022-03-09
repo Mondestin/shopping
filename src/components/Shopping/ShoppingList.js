@@ -1,6 +1,5 @@
 import {
   Box,
-  Button,
   Grid,
   Paper,
   Table,
@@ -12,13 +11,14 @@ import {
   Typography,
 } from "@mui/material";
 
-import DeleteIcon from "@mui/icons-material/Delete";
 import React, { useEffect, useState } from "react";
 import db from "../../firebase_config";
+import ShoppingDelete from "./ShoppingDelete";
 
 const ShoppingList = () => {
   const [shoppings, setShoppings] = useState([]);
   const shoppingsRef = db.collection("shoppings");
+
   const getCategories = () =>
     shoppingsRef.onSnapshot((querySnapshot) => {
       let shoppings = [];
@@ -40,7 +40,7 @@ const ShoppingList = () => {
           id="tableTitle"
           component="div"
           padding={1}
-          bgcolor= "#fdfdfd"
+          bgcolor="#fdfdfd"
         >
           My shoppings
         </Typography>
@@ -57,7 +57,7 @@ const ShoppingList = () => {
             <TableBody>
               {shoppings.map((shopping) => (
                 <TableRow
-                  key={shopping.data().id}
+                  key={shopping.id}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
                   <TableCell component="th" scope="row">
@@ -70,9 +70,10 @@ const ShoppingList = () => {
                   </TableCell>
                   <TableCell>
                     <Grid item>
-                      <Button>
-                        <DeleteIcon />
-                      </Button>
+                      <ShoppingDelete
+                        ID={shopping.id}
+                        name={shopping.data().name}
+                      />
                     </Grid>
                   </TableCell>
                 </TableRow>

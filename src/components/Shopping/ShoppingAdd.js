@@ -20,7 +20,6 @@ const ShoppingAdd = () => {
 
   const saveItem = async (e) => {
     e.preventDefault();
-    console.log(shoppingDate, Timestamp.fromDate(shoppingDate));
     await addDoc(collection(db, "shoppings"), {
       name: shoppingName,
       date: Timestamp.fromDate(shoppingDate),
