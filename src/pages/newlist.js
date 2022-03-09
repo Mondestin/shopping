@@ -6,24 +6,22 @@ import Button from "@mui/material/Button";
 import firebase from "../firebase_config";
 import Grid from "@mui/material/Grid";
 import ShoppingList from "../components/Shopping/ShoppingList";
-import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
 
 const NewItem = () => {
   const [shoppingName, setShoppingName] = useState("");
   const [shoppingDate, setShoppingDate] = useState("");
 
-  const db = firebase.firestore().collection("shoppings");
+  const db = firebase.firestore();
+  const shoppingsRef = db.collection("shoppings");
 
-  // save the item in the db
-  function saveItem(
-    e
-  ) {
+  function saveItem(e, shoppingName, shoppingDate) {
     e.preventDefault();
-    db.add({
+    shoppingsRef.add({
       name: shoppingName,
-      date: shoppingDate
     });
+    console.log(shoppingName);
   }
+
   return (
     <div
       style={{
@@ -78,7 +76,7 @@ const NewItem = () => {
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
                 onClick={(e) => {
-                  saveItem(e);
+                  saveItem(e, shoppingName, shoppingDate);
                 }}
               >
                 Create shopping
