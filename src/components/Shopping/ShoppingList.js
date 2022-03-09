@@ -33,22 +33,23 @@ const ShoppingList = () => {
   }, []);
 
   return (
-    <Box sx={{ width: "100%" }}>
-      <Paper sx={{ width: "100%", mb: 2 }}>
+    <Box>
+      <Paper>
         <Typography
-          sx={{ flex: "1 1 100%" }}
           variant="h6"
           id="tableTitle"
           component="div"
+          padding={1}
+          bgcolor= "#fdfdfd"
         >
-          List of shoppings
+          My shoppings
         </Typography>
 
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
               <TableRow>
-                <TableCell>Item Name</TableCell>
+                <TableCell>Name</TableCell>
                 <TableCell>Date</TableCell>
                 <TableCell align="right"></TableCell>
               </TableRow>

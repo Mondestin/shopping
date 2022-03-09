@@ -54,10 +54,11 @@ export default function EnhancedTable() {
         <Box sx={{ width: '100%' }}>
             <Paper sx={{ width: '100%', mb: 2 }}>
                 <Typography
-                    sx={{ flex: '1 1 100%' }}
-                    variant="h6"
-                    id="tableTitle"
-                    component="div"
+                     variant="h6"
+                     id="tableTitle"
+                     component="div"
+                     padding={1}
+                     bgcolor= "#f7f7f7"
                 >
                     List of Items
                 </Typography>
