@@ -14,6 +14,7 @@ import {
 import React, { useEffect, useState } from "react";
 import db from "../../firebase_config";
 import ShoppingDelete from "./ShoppingDelete";
+import BallotIcon from "@mui/icons-material/Ballot";
 
 const ShoppingList = () => {
   const [shoppings, setShoppings] = useState([]);
@@ -36,13 +37,12 @@ const ShoppingList = () => {
     <Box>
       <Paper>
         <Typography
-          variant="h6"
           id="tableTitle"
-          component="div"
           padding={1}
           bgcolor="#fdfdfd"
+          color="secondary"
         >
-          My shoppings
+          <BallotIcon fontSize="large" />
         </Typography>
 
         <TableContainer component={Paper}>
