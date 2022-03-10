@@ -1,9 +1,9 @@
 import "./App.css";
 import * as React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Navbar from "./components/Navbar/Navbar";
 import Shopping from "./components/Shopping";
 import NewItem from "./pages/newitem";
+import Navbar from "./components/NavBar";
 
 function App() {
   return (

@@ -1,59 +1,111 @@
-import { Link } from "react-router-dom";
+import * as React from "react";
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Toolbar from "@mui/material/Toolbar";
+import IconButton from "@mui/material/IconButton";
+import Typography from "@mui/material/Typography";
+import Menu from "@mui/material/Menu";
+import MenuIcon from "@mui/icons-material/Menu";
+import Container from "@mui/material/Container";
+import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import { AppBar, Box, Tab, Tabs } from "@mui/material";
-import { useState } from "react";
-import { TabContext, TabList, TabPanel } from "@mui/lab";
-import Home from "../../pages/home";
-import NewItem from "../../pages/newitem";
-import { useTheme } from '@mui/material/styles';
-import Shopping from "../Shopping";
+import Tooltip from "@mui/material/Tooltip";
+import MenuItem from "@mui/material/MenuItem";
+import { Link } from "react-router-dom";
+
+const title = "Shoppings";
+const pages = [
+  { name: "My shoppings", link: "/shoppings" },
+  { name: "Items", link: "/items" },
+];
 
 const Navbar = () => {
-  const theme = useTheme();
-  const [value, setValue] = useState("1");
+  const [anchorElNav, setAnchorElNav] = React.useState(null);
+  const [anchorElUser, setAnchorElUser] = React.useState(null);
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
+  const handleOpenNavMenu = (event) => {
+    setAnchorElNav(event.currentTarget);
   };
+
+  const handleCloseNavMenu = () => {
+    setAnchorElNav(null);
+  };
+
   return (
-    <div>
-      <nav>
-        <div>
-          <TabContext value={value}>
-            <Box
+    <AppBar position="static">
+      <Container maxWidth="xl">
+        <Toolbar disableGutters>
+          <Typography
+            variant="h6"
+            noWrap
+            component="div"
+            sx={{ mr: 2, display: { xs: "none", md: "flex" } }}
+          >
+            {title}
+          </Typography>
+
+          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+            <IconButton
+              size="large"
+              aria-label="account of current user"
+              aria-controls="menu-appbar"
+              aria-haspopup="true"
+              onClick={handleOpenNavMenu}
+              color="inherit"
+            >
+              <MenuIcon />
+            </IconButton>
+            <Menu
+              id="menu-appbar"
+              anchorEl={anchorElNav}
+              anchorOrigin={{
+                vertical: "bottom",
+                horizontal: "left",
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "left",
+              }}
+              open={Boolean(anchorElNav)}
+              onClose={handleCloseNavMenu}
               sx={{
-                borderBottom: 1,
-                borderColor: "divider",
-                bgcolor: "background.paper",
+                display: { xs: "block", md: "none" },
               }}
             >
-              <AppBar position="static">
-                <TabList
-                  onChange={handleChange}
-                  aria-label="lab API tabs example"
-                  textColor="inherit"
-                  indicatorColor="secondary"
-                  centered
+              {pages.map((page) => (
+                <Link style={{textDecoration: 'inherit', color: 'inherit'}} key={page.name} to={page.link}>
+                  <MenuItem key={page.name} onClick={handleCloseNavMenu}>
+                    <Typography textAlign="center">{page.name}</Typography>
+                  </MenuItem>
+                </Link>
+              ))}
+            </Menu>
+          </Box>
+          <Typography
+            variant="h6"
+            noWrap
+            component="div"
+            sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}
+          >
+            {title}
+          </Typography>
+          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+            {pages.map((page) => (
+              <Link style={{textDecoration: 'inherit', color: 'inherit'}} key={page.name} to={page.link}>
+                <Button
+                  key={page.name}
+                  onClick={handleCloseNavMenu}
+                  sx={{ my: 2, color: "white", display: "block" }}
                 >
-                  <Tab label="Home" value="1" />
-                  <Tab label="Shopping" value="2" />
-                  <Tab label="Item" value="3" />
-                </TabList>
-              </AppBar>
-            </Box>
-            <TabPanel value="1">
-              <Home />
-            </TabPanel>
-            <TabPanel value="2">
-              <Shopping/>
-            </TabPanel>
-            <TabPanel value="3">
-              <NewItem />
-            </TabPanel>
-          </TabContext>
-        </div>
-      </nav>
-    </div>
+                  {page.name}
+                </Button>
+              </Link>
+            ))}
+          </Box>
+        </Toolbar>
+      </Container>
+    </AppBar>
   );
 };
 export default Navbar;
