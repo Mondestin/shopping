@@ -39,7 +39,7 @@ const CategoryList = ({ itemCategorie, setItemCategorie }) => {
           }}
         >
           {categories.map((category) => (
-            <MenuItem key={category.data().id} value={category.data().name}>
+            <MenuItem key={category.id} value={category.data().name}>
               {category.data().name}
             </MenuItem>
           ))}
