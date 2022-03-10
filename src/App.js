@@ -3,7 +3,7 @@ import * as React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Shopping from "./components/Shopping";
 import NewItem from "./pages/newitem";
-import Navbar from "./components/NavBar";
+import Navbar from "./components/Navbar";
 
 function App() {
   return (
