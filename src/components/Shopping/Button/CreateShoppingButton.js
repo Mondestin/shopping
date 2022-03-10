@@ -1,6 +1,6 @@
 import { Button } from "@mui/material";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
-import db from "../../firebase_config";
+import db from "../../../firebase_config";
 import { addDoc, collection, Timestamp } from "firebase/firestore";
 
 const CreateShoppingButton = ({ shopping, resetInputValue }) => {

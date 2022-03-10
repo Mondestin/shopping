@@ -1,5 +1,5 @@
 import React from "react";
-import CreateShoppingButton from "./CreateShoppingButton";
+import CreateShoppingButton from "../Button/CreateShoppingButton";
 import ShoppingForm from "./ShoppingForm";
 
 const CreateShoppingForm = () => {

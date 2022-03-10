@@ -12,9 +12,9 @@ import {
 } from "@mui/material";
 
 import React, { useEffect, useState } from "react";
-import db from "../../firebase_config";
-import ShoppingDelete from "./ShoppingDelete";
+import db from "../../../firebase_config";
 import BallotIcon from "@mui/icons-material/Ballot";
+import DeleteShoppingButton from "../Button/DeleteShoppingButton";
 
 const ShoppingList = () => {
   const [shoppings, setShoppings] = useState([]);
@@ -70,7 +70,7 @@ const ShoppingList = () => {
                   </TableCell>
                   <TableCell>
                     <Grid item>
-                      <ShoppingDelete
+                      <DeleteShoppingButton
                         ID={shopping.id}
                         name={shopping.data().name}
                       />

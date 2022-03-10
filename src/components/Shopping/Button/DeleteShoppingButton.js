@@ -2,9 +2,9 @@ import { Button } from "@mui/material";
 import React from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { deleteDoc, doc } from "firebase/firestore";
-import db from "../../firebase_config";
+import db from "../../../firebase_config";
 
-const ShoppingDelete = ({ ID, name }) => {
+const DeleteShoppingButton = ({ ID, name }) => {
   const deleteShopping = async () => {
     await deleteDoc(doc(db, "shoppings", ID));
   };
@@ -16,4 +16,4 @@ const ShoppingDelete = ({ ID, name }) => {
   );
 };
 
-export default ShoppingDelete;
+export default DeleteShoppingButton;
