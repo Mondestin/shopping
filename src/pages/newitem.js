@@ -56,7 +56,6 @@ const NewItem = () => {
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
-          width: "80%",
         }}
       >
         <h1>New Item</h1>

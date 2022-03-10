@@ -6,18 +6,14 @@ import CreateShoppingForm from "./Form/CreateShoppingForm";
 
 const Shopping = () => {
   return (
-    <div className="content">
-      <div>
-        <Grid container spacing={2}>
-          <Grid item sm={8}>
-            <ShoppingList />
-          </Grid>
-          <Grid item sm={4}>
-            <CreateShoppingForm/>
-          </Grid>
-        </Grid>
-      </div>
-    </div>
+    <Grid container spacing={3} mt={1}>
+      <Grid item sm={8}>
+        <ShoppingList />
+      </Grid>
+      <Grid item sm={4}>
+        <CreateShoppingForm />
+      </Grid>
+    </Grid>
   );
 };
 export default Shopping;
