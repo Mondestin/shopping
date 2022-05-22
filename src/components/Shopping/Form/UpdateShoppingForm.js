@@ -22,7 +22,7 @@ const UpdateShoppingForm = () => {
     <Card sx={{ minWidth: 275 }}>
       <CardContent>
         <Typography variant="h6" color="text.secondary" gutterBottom>
-          Edit shopping information
+          Edit shopping informations
         </Typography>
         <Typography variant="body">
           <Grid container spacing={2}>
