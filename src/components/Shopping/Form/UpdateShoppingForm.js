@@ -53,7 +53,7 @@ const UpdateShoppingForm = () => {
         </Typography>
       </CardContent>
       <CardActions>
-        <UpdateShoppingButton />
+        <UpdateShoppingButton shopping={{id, name, description}} />
       </CardActions>
     </Card>
   );

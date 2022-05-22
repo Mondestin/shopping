@@ -1,11 +1,16 @@
 import { Button } from "@mui/material";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
+import db from "../../../firebase_config";
+import { doc, updateDoc } from "firebase/firestore";
 
-const UpdateShoppingButton = ({ shopping, resetInputValue }) => {
-  const saveItem = async (e) => {
+const UpdateShoppingButton = ({ shopping }) => {
+  const updateShopping = async (e) => {
     e.preventDefault();
-    console.log(shopping);
-  
+    const shoppingRef = doc(db, "shoppings", shopping.id);
+    await updateDoc(shoppingRef, {
+      name: shopping.name,
+      description: shopping.description
+    })
   };
 
   return (
@@ -15,7 +20,7 @@ const UpdateShoppingButton = ({ shopping, resetInputValue }) => {
       disableElevation
       startIcon={<AddShoppingCartIcon />}
       fullWidth
-      onClick={saveItem}
+      onClick={updateShopping}
     >
       Edit
     </Button>
