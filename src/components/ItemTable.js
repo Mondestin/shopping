@@ -63,7 +63,7 @@ export default function EnhancedTable() {
                     List of Items
                 </Typography>
 
-                <TableContainer component={Paper}>
+                <TableContainer>
                     <Table sx={{ minWidth: 650 }} aria-label="simple table">
                         <TableHead>
                             <TableRow>

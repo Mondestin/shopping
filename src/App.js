@@ -5,6 +5,8 @@ import Shopping from "./components/Shopping";
 import NewItem from "./pages/newitem";
 import Navbar from "./components/Navbar";
 import { Container } from "@mui/material";
+import UpdateShoppingForm from "./components/Shopping/Form/UpdateShoppingForm";
+import NewShoppingForm from "./components/Shopping/Form/NewShoppingForm";
 
 function App() {
   return (
@@ -13,7 +15,10 @@ function App() {
         <Navbar />
         <Container>
           <Routes>
-            <Route path="/shoppings" element={<Shopping />} />
+            <Route path="/shoppings" element={<Shopping />}>
+              <Route path="new" element={<NewShoppingForm />} />
+              <Route path=":id/edit" element={<UpdateShoppingForm />} />
+            </Route>
             <Route path="/items" element={<NewItem />} />
           </Routes>
         </Container>

@@ -9,8 +9,12 @@ const DeleteShoppingButton = ({ ID, name }) => {
     await deleteDoc(doc(db, "shoppings", ID));
   };
 
+  const handleDelete = () => {
+    if (window.confirm(`Are you sure to delete ${name} shopping ?`)) deleteShopping()
+  }
+
   return (
-    <Button onClick={() => { if (window.confirm(`Are you sure to delete ${name} shopping ?`)) deleteShopping() } }>
+    <Button onClick={ handleDelete }>
       <DeleteIcon color="error" />
     </Button>
   );

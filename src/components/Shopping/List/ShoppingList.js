@@ -1,5 +1,6 @@
 import {
   Box,
+  Button,
   Grid,
   Paper,
   Table,
@@ -11,45 +12,30 @@ import {
   Typography,
 } from "@mui/material";
 
-import React, { useEffect, useState } from "react";
-import db from "../../../firebase_config";
-import BallotIcon from "@mui/icons-material/Ballot";
 import DeleteShoppingButton from "../Button/DeleteShoppingButton";
+import EditShoppingIconButton from "../Button/EditShoppingIconButton";
+import { Link } from "react-router-dom";
 
-const ShoppingList = () => {
-  const [shoppings, setShoppings] = useState([]);
-  const shoppingsRef = db.collection("shoppings");
-
-  const getCategories = () =>
-    shoppingsRef.onSnapshot((querySnapshot) => {
-      let shoppings = [];
-      querySnapshot.forEach((doc) => {
-        shoppings.push(doc);
-      });
-      setShoppings(shoppings);
-    });
-
-  useEffect(() => {
-    getCategories();
-  }, []);
-
+const ShoppingList = ({ shoppings }) => {
   return (
     <Box>
-      <Paper>
+      <Paper elevation={1}>
         <Typography
           id="tableTitle"
           padding={1}
           bgcolor="#fdfdfd"
           color="secondary"
         >
-          <BallotIcon fontSize="large" />
+          <Link style={{ textDecoration: "inherit" }} to="new">
+            <Button color="success" variant="contained">New</Button>
+          </Link>
         </Typography>
-
-        <TableContainer component={Paper}>
+        <TableContainer>
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
               <TableRow>
                 <TableCell>Name</TableCell>
+                <TableCell>Description</TableCell>
                 <TableCell>Date</TableCell>
                 <TableCell align="right"></TableCell>
               </TableRow>
@@ -63,6 +49,9 @@ const ShoppingList = () => {
                   <TableCell component="th" scope="row">
                     {shopping.data().name}
                   </TableCell>
+                  <TableCell component="th" scope="row">
+                    {shopping.data().description}
+                  </TableCell>
                   <TableCell>
                     {new Date(
                       shopping.data().date.seconds * 1000
@@ -70,6 +59,7 @@ const ShoppingList = () => {
                   </TableCell>
                   <TableCell>
                     <Grid item>
+                      <EditShoppingIconButton id={shopping.id} />
                       <DeleteShoppingButton
                         ID={shopping.id}
                         name={shopping.data().name}
