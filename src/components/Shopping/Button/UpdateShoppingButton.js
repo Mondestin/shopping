@@ -1,8 +1,8 @@
 import { Button } from "@mui/material";
-import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import db from "../../../firebase_config";
 import { doc, updateDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 const UpdateShoppingButton = ({ shopping }) => {
   const navigate = useNavigate();
@@ -22,11 +22,11 @@ const UpdateShoppingButton = ({ shopping }) => {
       variant="outlined"
       color="primary"
       disableElevation
-      startIcon={<AddShoppingCartIcon />}
+      startIcon={<ShoppingCartIcon />}
       fullWidth
       onClick={updateShopping}
     >
-      Edit
+      Update
     </Button>
   );
 };
