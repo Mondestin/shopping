@@ -1,6 +1,6 @@
 import "./App.css";
 import * as React from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Navigate, Route, Routes } from "react-router-dom";
 import Shopping from "./components/Shopping";
 import NewItem from "./pages/newitem";
 import Navbar from "./components/Navbar";
@@ -15,6 +15,7 @@ function App() {
         <Navbar />
         <Container>
           <Routes>
+            <Route exact path="/" element={<Navigate to="/shoppings" />}></Route>
             <Route path="/shoppings" element={<Shopping />}>
               <Route path="new" element={<NewShoppingForm />} />
               <Route path=":id/edit" element={<UpdateShoppingForm />} />
