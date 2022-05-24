@@ -7,6 +7,7 @@ import Navbar from "./pages/Navbar";
 import { Container } from "@mui/material";
 import UpdateShoppingForm from "./components/Shopping/Form/UpdateShoppingForm";
 import NewShoppingForm from "./components/Shopping/Form/NewShoppingForm";
+import Items from "./pages/Items";
 
 function App() {
   return (
@@ -20,7 +21,7 @@ function App() {
               <Route path="new" element={<NewShoppingForm />} />
               <Route path=":id/edit" element={<UpdateShoppingForm />} />
             </Route>
-            <Route path="/shoppings/:id/items" element={<NewItem />} />
+            <Route path="/shoppings/:id/items" element={<Items />} />
           </Routes>
         </Container>
       </Router>
