@@ -1,16 +1,15 @@
-import "../App.css";
 import * as React from "react";
 import TextField from "@mui/material/TextField";
 import { useState } from "react";
 import Button from "@mui/material/Button";
-import db from "../firebase_config";
+import db from "../../../firebase_config";
 import Grid from "@mui/material/Grid";
 import Select from "@mui/material/Select";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
-import EnhancedTable from "../components/ItemTable";
-import CategoryList from "../components/Category/CategoryList";
+import EnhancedTable from "../List/ItemTable";
+import CategoryList from "../../Category/CategoryList";
 
 const NewItem = () => {
   const [itemName, setItemName] = useState("");

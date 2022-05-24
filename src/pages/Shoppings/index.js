@@ -1,12 +1,12 @@
 import "../../App.css";
-import * as React from "react";
+import { useEffect, useState } from "react";
 import Grid from "@mui/material/Grid";
-import ShoppingList from "./List/ShoppingList";
+import ShoppingList from "../../components/Shopping/List/ShoppingList";
 import db from "../../firebase_config";
 import { Outlet } from "react-router-dom";
 
 const Shopping = () => {
-  const [shoppings, setShoppings] = React.useState([]);
+  const [shoppings, setShoppings] = useState([]);
   const shoppingsRef = db.collection("shoppings");
 
   const getShoppings = () =>
@@ -18,7 +18,7 @@ const Shopping = () => {
       setShoppings(shoppings);
     });
 
-  React.useEffect(() => {
+  useEffect(() => {
     getShoppings();
   }, []);
 

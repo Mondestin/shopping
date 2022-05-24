@@ -14,7 +14,6 @@ import { Link } from "react-router-dom";
 const title = "Shoppings";
 const pages = [
   { name: "My shoppings", link: "/shoppings" },
-  { name: "Items", link: "/items" },
 ];
 
 const Navbar = () => {

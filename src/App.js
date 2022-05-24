@@ -1,9 +1,9 @@
 import "./App.css";
 import * as React from "react";
 import { BrowserRouter as Router, Navigate, Route, Routes } from "react-router-dom";
-import Shopping from "./components/Shopping";
-import NewItem from "./pages/newitem";
-import Navbar from "./components/Navbar";
+import Shopping from "./pages/Shoppings";
+import NewItem from "./components/Items/Form/newitem";
+import Navbar from "./pages/Navbar";
 import { Container } from "@mui/material";
 import UpdateShoppingForm from "./components/Shopping/Form/UpdateShoppingForm";
 import NewShoppingForm from "./components/Shopping/Form/NewShoppingForm";
@@ -20,7 +20,7 @@ function App() {
               <Route path="new" element={<NewShoppingForm />} />
               <Route path=":id/edit" element={<UpdateShoppingForm />} />
             </Route>
-            <Route path="/items" element={<NewItem />} />
+            <Route path="/shoppings/:id/items" element={<NewItem />} />
           </Routes>
         </Container>
       </Router>

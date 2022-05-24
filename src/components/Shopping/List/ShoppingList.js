@@ -14,6 +14,7 @@ import {
 
 import DeleteShoppingButton from "../Button/DeleteShoppingButton";
 import EditShoppingIconButton from "../Button/EditShoppingIconButton";
+import GoToItemsButton from "../Button/GoToItemsButton"
 import { Link } from "react-router-dom";
 
 const ShoppingList = ({ shoppings }) => {
@@ -59,6 +60,7 @@ const ShoppingList = ({ shoppings }) => {
                   </TableCell>
                   <TableCell>
                     <Grid item>
+                      <GoToItemsButton id={shopping.id} />
                       <EditShoppingIconButton id={shopping.id} />
                       <DeleteShoppingButton
                         ID={shopping.id}
