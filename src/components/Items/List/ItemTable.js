@@ -14,13 +14,14 @@ import { useState, useEffect } from 'react';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
+import { useParams } from 'react-router-dom';
 
 
-export default function EnhancedTable() {
+export default function EnhancedTable({ shoppingId }) {
     const [items, setItems] = useState([]);
 
     // get the connection with firebase for the items collection
-    const itemsRef = db.collection("items");
+    const itemsRef = db.collection("items").where("shoppingId", "==", shoppingId);
 
 
     // delete the item from the db
@@ -40,8 +41,7 @@ export default function EnhancedTable() {
                 querySnapshot.docs.map((doc) => ({
                     id: doc.id,
                     name: doc.data().name,
-                    categorie: doc.data().categorie,
-                    shoppinlist: doc.data().shoppinlist,
+                    shoppingId: doc.data().shoppingId,
                     description: doc.data().description,
                     status: doc.data().status
                 }))
@@ -67,7 +67,6 @@ export default function EnhancedTable() {
                         <TableHead>
                             <TableRow>
                                 <TableCell>Item Name</TableCell>
-                                <TableCell>Categorie</TableCell>
                                 <TableCell>Shopping List</TableCell>
                                 <TableCell>Description</TableCell>
                                 <TableCell align="right">Actions</TableCell>
@@ -82,8 +81,7 @@ export default function EnhancedTable() {
                                     <TableCell component="th" scope="row">
                                         {item.name}
                                     </TableCell>
-                                    <TableCell>{item.categorie}</TableCell>
-                                    <TableCell>{item.shoppinlist}</TableCell>
+                                    <TableCell>{item.shoppingId}</TableCell>
                                     <TableCell>{item.description}</TableCell>
                                     <TableCell>
                                         <Grid item xs={4}>

@@ -21,7 +21,7 @@ function App() {
               <Route path="new" element={<NewShoppingForm />} />
               <Route path=":id/edit" element={<UpdateShoppingForm />} />
             </Route>
-            <Route path="/shoppings/:id/items" element={<Items />} />
+            <Route path="/shoppings/:shoppingId/items" element={<Items />} />
           </Routes>
         </Container>
       </Router>
