@@ -1,10 +1,23 @@
 import { Card, CardActions, CardContent, Grid, TextField, Typography } from '@mui/material';
-import React, { useState } from 'react'
+import { addDoc, collection, Timestamp } from 'firebase/firestore';
+import React, { useEffect, useState } from 'react'
 import CreateShoppingButton from '../Button/CreateShoppingButton';
+import db from "../../../firebase_config";
 
 const NewShoppingForm = () => {
-    const [name, setName] = useState("");
-    const [description, setDescription] = useState("");
+    const [name, setName] = useState("")
+    const [description, setDescription] = useState("")
+
+    const saveItem = async (e) => {
+        e.preventDefault();
+        await addDoc(collection(db, "shoppings"), {
+            name: name,
+            description: description,
+            date: Timestamp.fromDate(new Date()),
+        });
+    };
+
+
 
     return (
         <Card sx={{ minWidth: 275 }}>
@@ -20,6 +33,7 @@ const NewShoppingForm = () => {
                                 fullWidth
                                 label="Name"
                                 autoFocus
+                                name="name"
                                 onChange={(e) => {
                                     setName(e.target.value)
                                 }}
@@ -30,6 +44,7 @@ const NewShoppingForm = () => {
                                 required
                                 fullWidth
                                 label="Description"
+                                name="description"
                                 onChange={(e) => {
                                     setDescription(e.target.value)
                                 }}
@@ -39,7 +54,7 @@ const NewShoppingForm = () => {
                 </Typography>
             </CardContent>
             <CardActions>
-                <CreateShoppingButton name={name} description={description} />
+                <CreateShoppingButton name={name} saveItem={saveItem} description={description} />
             </CardActions>
         </Card>
     );

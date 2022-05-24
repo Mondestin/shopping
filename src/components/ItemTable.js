@@ -14,7 +14,7 @@ import db from '../firebase_config';
 import { useState, useEffect } from 'react';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
-
+import Checkbox from '@mui/material/Checkbox';
 
 
 export default function EnhancedTable() {
@@ -87,11 +87,18 @@ export default function EnhancedTable() {
                                     <TableCell>{item.shoppinlist}</TableCell>
                                     <TableCell>{item.description}</TableCell>
                                     <TableCell>
-                                        <Grid item xs={8}>
+                                        <Grid item xs={4}>
                                             <Button
                                                 onClick={(event) => { deleteItem(event, item.id) }}
                                             >
                                                 <DeleteIcon />
+                                            </Button>
+                                        </Grid>
+                                        <Grid item xs={4}>
+                                            <Button
+                                                // onClick={(event) => { deleteItem(event, item.id) }}
+                                            >
+                                                 <Checkbox />
                                             </Button>
                                         </Grid>
 

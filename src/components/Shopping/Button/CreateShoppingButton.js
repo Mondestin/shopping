@@ -1,18 +1,10 @@
 import { Button } from "@mui/material";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
-import db from "../../../firebase_config";
+
 import { addDoc, collection, Timestamp } from "firebase/firestore";
 
-const CreateShoppingButton = ({ name, description, resetInputValue }) => {
-  const saveItem = async (e) => {
-    e.preventDefault();
-    await addDoc(collection(db, "shoppings"), {
-      name: name,
-      description: description,
-      date: Timestamp.fromDate(new Date()),
-    });
-    
-  };
+const CreateShoppingButton = ({ name, description, saveItem, resetInputValue }) => {
+  
 
   return (
     <Button
