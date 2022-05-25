@@ -12,6 +12,7 @@ const NewShoppingForm = () => {
             name: watch("name"),
             description: watch("description"),
             date: Timestamp.fromDate(new Date()),
+            done: false
         });
         resetInputValue()
     };

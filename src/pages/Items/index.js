@@ -18,7 +18,8 @@ const Items = () => {
                 id: doc.id,
                 name: doc.data().name,
                 description: doc.data().description,
-                date: doc.data().date
+                date: doc.data().date,
+                done: doc.data().done
             })
         });
     }
@@ -29,7 +30,7 @@ const Items = () => {
 
     return (
         <Grid container spacing={2} mt={1}>
-            <Grid item xs={12} sm={4} sx={{ mt: 3 }}>
+            <Grid item xs={12} sm={4} >
                 <NewItem shoppingId={shoppingId} />
             </Grid>
             <Grid item xs={12} sm={8}>

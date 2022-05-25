@@ -16,18 +16,19 @@ import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
 import { useParams } from 'react-router-dom';
 import { deleteDoc, doc } from 'firebase/firestore';
+import UpdateItemStatus from '../Button/UpdateItemStatus';
+import { Chip } from '@mui/material';
 
 
 export default function EnhancedTable({ shoppingId, shopping }) {
     const [items, setItems] = useState([]);
-    const [status, setStatus] = useState(false);
+    const [progress, setProgress] = useState(items.length);
 
     // get the connection with firebase for the items collection
     const itemsRef = db.collection("items").where("shoppingId", "==", shoppingId);
 
 
     const deleteItem = async (e, ID) => {
-        console.log("delete")
         await deleteDoc(doc(db, "items", ID));
     };
 
@@ -43,17 +44,15 @@ export default function EnhancedTable({ shoppingId, shopping }) {
                 status: doc.data().status
             })))
             setItems(items)
+            const done = (items.filter((item) => item.status === true)).length
+            setProgress(done / items.length * 100)
         });
-    }
-    // change the state of the item 
-    function changeState(e, id) {
-        e.preventDefault();
-        db.doc(id).update({ status: !doc.data().status });
     }
 
     useEffect(() => {
         getItems();
     }, [])
+
 
     return (
         <Box>
@@ -65,6 +64,8 @@ export default function EnhancedTable({ shoppingId, shopping }) {
                     color="secondary"
                 >
                     List of shopping items
+                    <Chip label={`${progress}% done`} color={progress == 100 ? "success": "primary"} style={{ flex: 1, float: 'right' }}/>
+                   
                 </Typography>
 
                 <TableContainer>
@@ -72,7 +73,6 @@ export default function EnhancedTable({ shoppingId, shopping }) {
                         <TableHead>
                             <TableRow>
                                 <TableCell>Item Name</TableCell>
-                                <TableCell>Shopping List</TableCell>
                                 <TableCell>Description</TableCell>
                                 <TableCell align="right">Actions</TableCell>
                             </TableRow>
@@ -86,28 +86,15 @@ export default function EnhancedTable({ shoppingId, shopping }) {
                                     <TableCell component="th" scope="row">
                                         {item.name}
                                     </TableCell>
-                                    <TableCell>{item.shoppingId}</TableCell>
                                     <TableCell>{item.description}</TableCell>
-                                    <TableCell>
-                                        <Grid item xs={4}>
-                                            <Button
-                                                onClick={(e) => deleteItem(e, item.id)}
-                                            >
-                                                <DeleteIcon />
-                                            </Button>
-                                        </Grid>
-                                        <Grid item xs={4}>
-                                            <Button
-                                                onClick={(e) => {
-                                                    changeState(
-                                                        e,
-                                                        item.id
-                                                    );
-                                                }}
-                                            >
-                                                <Checkbox />
-                                            </Button>
-                                        </Grid>
+                                    <TableCell align="right">
+                                        <UpdateItemStatus item={item} />
+                                        <Button
+                                            onClick={(e) => deleteItem(e, item.id)}
+                                        >
+                                            <DeleteIcon color="error" />
+                                        </Button>
+
 
                                     </TableCell>
                                 </TableRow>
