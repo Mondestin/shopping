@@ -15,51 +15,56 @@ import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
 import { useParams } from 'react-router-dom';
+import { deleteDoc, doc } from 'firebase/firestore';
 
 
-export default function EnhancedTable({ shoppingId }) {
+export default function EnhancedTable({ shoppingId, shopping }) {
     const [items, setItems] = useState([]);
+    const [status, setStatus] = useState(false);
 
     // get the connection with firebase for the items collection
     const itemsRef = db.collection("items").where("shoppingId", "==", shoppingId);
 
 
-    // delete the item from the db
-    function deleteItem(event, id) {
-        event.preventDefault();
-        db.doc(id).delete();
-    }
+    const deleteItem = async (e, ID) => {
+        console.log("delete")
+        await deleteDoc(doc(db, "items", ID));
+    };
 
-
-    useEffect(() => {
-        getItems();
-    })
     // get the items from the db
     function getItems() {
         itemsRef.onSnapshot(function (querySnapshot) {
-            setItems(
-                querySnapshot.docs.map((doc) => ({
-                    id: doc.id,
-                    name: doc.data().name,
-                    shoppingId: doc.data().shoppingId,
-                    description: doc.data().description,
-                    status: doc.data().status
-                }))
-            )
+            let items = []
+            querySnapshot.docs.map((doc) => (items.push({
+                id: doc.id,
+                name: doc.data().name,
+                shoppingId: doc.data().shoppingId,
+                description: doc.data().description,
+                status: doc.data().status
+            })))
+            setItems(items)
         });
     }
+    // change the state of the item 
+    function changeState(e, id) {
+        e.preventDefault();
+        db.doc(id).update({ status: !doc.data().status });
+    }
+
+    useEffect(() => {
+        getItems();
+    }, [])
 
     return (
-        <Box sx={{ width: '100%' }}>
-            <Paper sx={{ width: '100%', mb: 2 }}>
+        <Box>
+            <Paper elevation={1}>
                 <Typography
-                     variant="h6"
-                     id="tableTitle"
-                     component="div"
-                     padding={1}
-                     bgcolor= "#f7f7f7"
+                    variant="h6"
+                    padding={1}
+                    bgcolor="#fdfdfd"
+                    color="secondary"
                 >
-                    List of Items
+                    List of shopping items
                 </Typography>
 
                 <TableContainer>
@@ -86,16 +91,21 @@ export default function EnhancedTable({ shoppingId }) {
                                     <TableCell>
                                         <Grid item xs={4}>
                                             <Button
-                                                onClick={(event) => { deleteItem(event, item.id) }}
+                                                onClick={(e) => deleteItem(e, item.id)}
                                             >
                                                 <DeleteIcon />
                                             </Button>
                                         </Grid>
                                         <Grid item xs={4}>
                                             <Button
-                                                // onClick={(event) => { deleteItem(event, item.id) }}
+                                                onClick={(e) => {
+                                                    changeState(
+                                                        e,
+                                                        item.id
+                                                    );
+                                                }}
                                             >
-                                                 <Checkbox />
+                                                <Checkbox />
                                             </Button>
                                         </Grid>
 

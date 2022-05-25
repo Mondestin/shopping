@@ -14,8 +14,6 @@ const UpdateShoppingForm = () => {
   let shopping = shoppings.filter((shopping) => shopping.id === id)[0].data();
   const { register, handleSubmit, watch, setValue, clearErrors, formState: { errors } } = useForm();
 
-
-
   const updateShopping = async () => {
     const shoppingRef = doc(db, "shoppings", id);
     await updateDoc(shoppingRef, {

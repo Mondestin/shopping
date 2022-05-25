@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 
 const NewShoppingForm = () => {
-    const { register, handleSubmit, watch, setValue, formState: { errors } } = useForm();
+    const { register, handleSubmit, watch, setValue, clearErrors, formState: { errors } } = useForm();
 
     const saveItem = async () => {
         await addDoc(collection(db, "shoppings"), {
@@ -19,6 +19,7 @@ const NewShoppingForm = () => {
     const resetInputValue = () => {
         setValue("name", "")
         setValue("description", "")
+        clearErrors()
     }
 
     return (
@@ -33,6 +34,7 @@ const NewShoppingForm = () => {
                         <Grid container spacing={2}>
                             <Grid item xs={12} sm={12}>
                                 <TextField
+                                    error={errors.name}
                                     fullWidth
                                     label="Name"
                                     autoFocus
@@ -42,6 +44,7 @@ const NewShoppingForm = () => {
                             </Grid>
                             <Grid item xs={12} sm={12}>
                                 <TextField
+                                    error={errors.description}
                                     fullWidth
                                     label="Description"
                                     name="description"
