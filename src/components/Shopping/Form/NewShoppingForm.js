@@ -49,7 +49,7 @@ const NewShoppingForm = () => {
                                     fullWidth
                                     label="Description"
                                     name="description"
-                                    {...register("description", { required: "Please fill the description." })}
+                                    {...register("description")}
                                     helperText={errors.description && errors.description.message}
                                 />
                             </Grid>

@@ -1,35 +1,35 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Typography from '@mui/material/Typography';
-import Paper from '@mui/material/Paper';
-import DeleteIcon from '@mui/icons-material/Delete';
-import db from '../../../firebase_config';
-import { useState, useEffect } from 'react';
-import Grid from '@mui/material/Grid';
-import Button from '@mui/material/Button';
-import Checkbox from '@mui/material/Checkbox';
-import { useParams } from 'react-router-dom';
-import { deleteDoc, doc } from 'firebase/firestore';
-import UpdateItemStatus from '../Button/UpdateItemStatus';
-import { Chip } from '@mui/material';
+import * as React from 'react'
+import Box from '@mui/material/Box'
+import Table from '@mui/material/Table'
+import TableBody from '@mui/material/TableBody'
+import TableCell from '@mui/material/TableCell'
+import TableContainer from '@mui/material/TableContainer'
+import TableHead from '@mui/material/TableHead'
+import TableRow from '@mui/material/TableRow'
+import Typography from '@mui/material/Typography'
+import Paper from '@mui/material/Paper'
+import DeleteIcon from '@mui/icons-material/Delete'
+import db from '../../../firebase_config'
+import { useState, useEffect } from 'react'
+import Grid from '@mui/material/Grid'
+import Button from '@mui/material/Button'
+import Checkbox from '@mui/material/Checkbox'
+import { useParams } from 'react-router-dom'
+import { deleteDoc, doc } from 'firebase/firestore'
+import UpdateItemStatus from '../Button/UpdateItemStatus'
+import { Chip } from '@mui/material'
 
 
 export default function EnhancedTable({ shoppingId, shopping }) {
     const [items, setItems] = useState([]);
-    const [progress, setProgress] = useState(items.length);
+    const [progress, setProgress] = useState(items.length)
 
     // get the connection with firebase for the items collection
-    const itemsRef = db.collection("items").where("shoppingId", "==", shoppingId);
+    const itemsRef = db.collection("items").where("shoppingId", "==", shoppingId)
 
 
     const deleteItem = async (e, ID) => {
-        await deleteDoc(doc(db, "items", ID));
+        await deleteDoc(doc(db, "items", ID))
     };
 
     // get the items from the db
@@ -45,7 +45,12 @@ export default function EnhancedTable({ shoppingId, shopping }) {
             })))
             setItems(items)
             const done = (items.filter((item) => item.status === true)).length
-            setProgress(done / items.length * 100)
+            if(done == 0) {
+                setProgress(0)
+            } else {
+                setProgress(done / items.length * 100)
+            }
+            
         });
     }
 

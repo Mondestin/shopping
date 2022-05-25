@@ -28,7 +28,7 @@ const ShoppingList = ({ shoppings }) => {
           color="secondary"
         >
           <Link style={{ textDecoration: "inherit" }} to="new">
-            <Button color="success" variant="contained">New</Button>
+            <Button color="success" variant="contained">New shopping</Button>
           </Link>
         </Typography>
         <TableContainer>
